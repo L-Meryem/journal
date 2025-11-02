@@ -16,5 +16,6 @@ Personal journal app where users can write, edit, and manage their own markdown 
  - `EJS`
  - `bcrypt, express-session, connect-flash`
  - `marked.js, easymde`
+ - `PaperCSS`
 
 

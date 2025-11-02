@@ -29,6 +29,13 @@ Array.from(edit).forEach(elem => {
   elem.addEventListener('click', async e => {
     e.stopPropagation();
 
+    //destroy preview
+    if (preview) {
+      preview.toTextArea();
+      preview = null;
+      isPreviewMode = false;
+    }
+
     //switch from preview to form
     document.querySelector('form').style.display = 'block';
     document.querySelector('#preview-area').value = '';
@@ -59,7 +66,7 @@ Array.from(edit).forEach(elem => {
 //MD preview
 entries.forEach(entry => {
   entry.addEventListener('click', async e => {
-    document.getElementById('preview-area').value = '';
+    // document.getElementById('preview-area').value = '';
     const entryId = e.currentTarget.dataset.id; //access data-id
     console.log(entryId);
 
@@ -74,24 +81,23 @@ entries.forEach(entry => {
     document.querySelector('form').style.display = 'none';
     document.querySelector('#preview-area').hidden = false;
 
-    if (!preview) {
-      preview = new EasyMDE({
-        element: document.getElementById('preview-area'),
-        toolbar: false,
-        status: false,
-        readOnly: true
-      });
-    }
-    preview.value(data.entry.content);
+    // if (!preview) {
+    //   preview = new EasyMDE({
+    //     element: document.getElementById('preview-area'),
+    //     toolbar: false,
+    //     status: false,
+    //     readOnly: true
+    //   });
+    // }
+    // preview.value(data.entry.content);
 
-    if (!isPreviewMode) {
-      EasyMDE.togglePreview(preview);
-      isPreviewMode = true;
-    }
+    // if (!isPreviewMode) {
+    //   EasyMDE.togglePreview(preview);
+    //   isPreviewMode = true;
+    // }
+
+    document.getElementById('preview-area').innerHTML =
+      marked.parse(data.entry.content);
   });
 });
-
-
-
-
 

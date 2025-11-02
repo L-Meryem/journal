@@ -5,8 +5,13 @@ const Entry = require('./models/Entry');
 const User = require('./models/User');
 
 router.get('/', async (req, res) => {
-    res.render('index'); //no extension
+    res.render('index', {message: req.flash('loginMessage')});
 });
+
+router.get('/signup', async (req, res) => {
+    res.render('signup', {message: req.flash('signupMessage')});
+});
+
 
 //display all entries
 router.get('/entries', async (req, res) => {
@@ -54,16 +59,6 @@ router.post('/entries', async (req, res) => {
         });
     res.redirect('/entries');
 });
-
-// //Update card's status
-// router.put('/card', async (req, res) => {
-//     const card = await Card.findByIdAndUpdate(
-//         req.body.cardId,
-//         { status: req.body.status.toLowerCase() },
-//         { new: true }
-//     );
-//     res.json({ card });
-// });
 
 //Delete entry
 router.delete('/entries', async (req, res) => {

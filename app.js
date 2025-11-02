@@ -2,8 +2,7 @@ const connectToMongo = require('./config/db');
 connectToMongo();
 const express = require('express');
 const app = express();
-
-//1
+const flash = require('connect-flash');
 const session = require('express-session');// I need it to link stuff to connected user
 // can access req.sessions.userId from any route
 app.use(session({
@@ -11,6 +10,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
+app.use(flash());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

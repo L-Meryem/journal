@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/papercss@1.9.2/dist/paper.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <title>My journal</title>
+</head>
+
+<body>
+    <header>
+        <nav class="border fixed split-nav">
+            <div class="nav-brand">
+                <h3><a href="#">My journal</a></h3>
+            </div>
+            <% if(user.email) { %>
+                <div class="collapsible">
+                    <input id="collapsible1" type="checkbox" name="collapsible1">
+                    <label for="collapsible1">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </label>
+                    <div class="collapsible-body">
+                        <ul class="inline">
+                            <li><a href="#">
+                                    <%= user.name %>
+                                </a></li>
+                            <li><a href="/unlink">Unlink</a></li>
+                            <li><a href="/auth/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <% } %>
+        </nav>
+    </header>
+    <div class="wrapper">
+        <main class="border">
+            <form action="/entries" method="post">
+                <input type="text" name="title" id="title" placeholder="Entry name">
+                <input type="hidden" name="entryid" id="entryid" value="">
+                <textarea name="entry" class="border" id="entry" placeholder="Start your entry..."></textarea>
+                <div class="btn-group">
+                    <button type="submit">Save</button>
+                    <button type="reset">Cancel</button>
+                </div>
+            </form>
+            <textarea id="preview-area" hidden></textarea>
+        </main>
+        <aside class="border">
+            <section class="aside-title">
+                <h3>Entries</h3>
+                <a href="/entries"><i class="fa-solid fa-plus"></i></a>
+            </section>
+            <ul id="entries">
+                <% entries.forEach( entry=> {%>
+                    <% if(entry.author.id===userId) { %>
+                        <li class="border" data-id="<%= entry._id%>">
+                            <div class="info">
+                                <small>
+                                    <%= new Date(entry.dateOfCreation).toLocaleDateString('en-US') %>
+                                </small>
+                                <div>
+                                    <i class="fa-solid fa-pen"></i>
+                                    <i class="fa-solid fa-trash"></i>
+                                </div>
+
+                            </div>
+                            <p>
+                                <%= entry.title%>
+                            </p>
+                        </li>
+                        <% };%>
+                            <% });%>
+            </ul>
+        </aside>
+    </div>
+
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+    <script src="/md-config.js"></script>
+    <script src="https://kit.fontawesome.com/a9b54c7280.js" crossorigin="anonymous"></script>
+    <script src="/main.js"></script>
+</body>
+
+</html>
